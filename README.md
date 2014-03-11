@@ -14,12 +14,12 @@ Step  : Read CSV files from folder A, process it uppercase character B, write it
 
 All Spring Batch Examples:
 
-* are individual github repositories and maven projects, the pom.xml in this root directory is only for a convenient _build all_ feature
+* are spring official repositories and maven projects, the pom.xml in this root directory is only for a convenient _build all_ feature
 * are tested with:
   * Spring Batch 2.2.5.RELEASE
   * Spring Framework 3.2.0.RELEASE
 * are provided "as is", no guarantees :-)
-* work with [mysql database][database], 
+* work with [mysql database][127.0.0.1], 
 
 Overview for the project setup.
 
