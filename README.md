@@ -6,8 +6,7 @@ Collection of Spring Batch Examples, covering the basics, [readers], [processor]
 
 Consider following batch jobs :
 
-    Step  – Read CSV files from folder A, process it uppercase B, write it to folder C. “READ-PROCESS-WRITE”
-
+Step  : Read CSV files from folder A, process it uppercase character B, write it to folder C. “READ-PROCESS-WRITE”
 
 
 ## General Informations
