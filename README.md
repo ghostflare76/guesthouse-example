@@ -1,7 +1,7 @@
 # Spring Batch Examples
 
 Collection of Spring Batch Examples, covering the basics, [readers], [processor] [writers], and complex usecases.
-
+include Spring Batch (Java configuration, Xml Configuration) 
 
 
 Consider following batch jobs :
