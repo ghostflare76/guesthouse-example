@@ -9,7 +9,7 @@ Consider following batch jobs :
 
 Step  : “READ-PROCESS-WRITE”
 * A : Read CSV files from folder , 
-* B : process it (Converted to uppercase to lowercase)  , 
+* B : process it (Converted lowercase to uppercase)  , 
 * C : Make XML and write it to folder C. 
 
 
