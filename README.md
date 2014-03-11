@@ -7,9 +7,10 @@ include Spring Batch (Java configuration, Xml Configuration)
 
 Consider following batch jobs :
 
-Step  : Read CSV files from folder A, 
-          process it (Converted to uppercase to lowercase)  B, 
-          Make XML and write it to folder C. “READ-PROCESS-WRITE”
+Step  : “READ-PROCESS-WRITE”
+* A : Read CSV files from folder , 
+* B : process it (Converted to uppercase to lowercase)  , 
+* C : Make XML and write it to folder C. 
 
 
 ## General Informations
