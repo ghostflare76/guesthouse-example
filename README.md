@@ -12,6 +12,10 @@ Step  : “READ-PROCESS-WRITE”
 * B : process it (Converted lowercase to uppercase)  , 
 * C : Make XML and write it to folder C. 
 
+Step  : “READ-PROCESS-WRITE”
+* A : Read Rows from DataBase , 
+* C : Make XML and write it to folder C. 
+
 
 ## General Informations
 
