@@ -42,6 +42,12 @@
 
 
 	<repositories>
+		<repository>
+			<id>in-project</id>
+  			<name>In-Project Custom Jars</name>
+			<url>file://C:/Users/cowboy76.NC-KOREA/.m2/repository</url>
+		
+		</repository>
 
 		<repository>
 			<id>spring-releases</id>
@@ -99,8 +105,7 @@
 
 	<dependencies>
 	
-			<!-- Spring -->
-
+	
 		<!-- Spring Batch dependencies -->
 		<dependency>
 			<groupId>org.springframework.batch</groupId>
