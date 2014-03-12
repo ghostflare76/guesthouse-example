@@ -2,7 +2,7 @@
 
 Collection of Spring Batch Examples, covering the basics, [readers], [processor] [writers], and complex usecases.
 
-include Spring Batch (Java configuration, Xml Configuration) 
+include Spring Batch (only Java configuration) 
 
 
 Consider following batch jobs :
@@ -12,7 +12,7 @@ Step  : “READ-PROCESS-WRITE”
 * B : process it (Converted lowercase to uppercase)  , 
 * C : Make XML and write it to folder C. 
 
-Step  : “READ-PROCESS-WRITE”
+Step  : “READ-WRITE”
 * A : Read Rows from DataBase , 
 * C : Make XML and write it to folder C. 
 
