@@ -35,7 +35,7 @@ public class CsvToXmlWriterJobConfiguration {
 	@Bean
 	public ItemReader<Report> reader() {
 		FlatFileItemReader<Report> reader = new FlatFileItemReader<Report>();
-		reader.setResource(new ClassPathResource("cvs/input/report.csv"));
+		reader.setResource(new ClassPathResource("input/report.csv"));
 		reader.setLineMapper(lineMapper());
 		return reader;
 	}
