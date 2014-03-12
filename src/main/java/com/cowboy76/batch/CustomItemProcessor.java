@@ -9,16 +9,20 @@ import com.cowboy76.batch.model.Report;
 public class CustomItemProcessor implements ItemProcessor<Report, Report> {
 
 	@Override
-	public Report process(final Report item) throws Exception {
+	public Report process(final Report report) throws Exception {
 		
-		final String stffName = item.getStaffName().toUpperCase(); 
-		final Report report = new Report();
+		final String stffName = report.getStaffName().toUpperCase(); 
+		final Report transForm = new Report();		
 		
+		transForm.setStaffName(stffName);
+		transForm.setDate(report.getDate());
+		transForm.setId(report.getId());
+		transForm.setQty(report.getQty());
+		transForm.setSales(report.getSales());		
 		
-		report.setStaffName(stffName);
-		
-		System.out.println("Converting ( " + item +  ") into (" + report + ")");
-		return report;
+		System.out.println("Converting ( " + report +  ") into (" + transForm + ")");
+	
+		return transForm;
 	}
 
 }
