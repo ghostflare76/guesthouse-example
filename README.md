@@ -32,10 +32,10 @@ Overview for the project setup.
 
 ### Maven Configuration
 
-The examples modules are:
+The test modules are:
 
-* spring batch examples 
-    * launcherforXml , launcher for xml configuration 
-    * launcherforConfig, launcher for java configuration 
+* spring batch test
+    * testCsvToXmlJob
+    * testDbToXmlJob
 
 
