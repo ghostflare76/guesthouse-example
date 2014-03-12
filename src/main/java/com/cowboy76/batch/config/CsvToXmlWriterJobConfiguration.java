@@ -1,4 +1,4 @@
-package com.cowboy76.batch;
+package com.cowboy76.batch.config;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -21,6 +21,8 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.oxm.Marshaller;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
+import com.cowboy76.batch.CustomItemProcessor;
+import com.cowboy76.batch.mapper.ReportFileSetMapper;
 import com.cowboy76.batch.model.Report;
 
 @Configuration
@@ -63,7 +65,7 @@ public class CsvToXmlWriterJobConfiguration {
 	@Bean
 	public ItemWriter<Report> writer() {
 		StaxEventItemWriter<Report> writer = new StaxEventItemWriter<Report>();
-		writer.setResource(new FileSystemResource("xml/outputs/report.xml"));
+		writer.setResource(new FileSystemResource("xml/outputs/csvToXmlReport.xml"));
 		writer.setRootTagName("report");
 		writer.setMarshaller(marshaller());
 		return writer;
@@ -77,8 +79,8 @@ public class CsvToXmlWriterJobConfiguration {
 	}
 
 	@Bean
-	public Job importUserJob() {
-		return jobBuilders.get("importUserJob").start(step()).build();
+	public Job csvToXmlJob() {
+		return jobBuilders.get("csvToXmlJob").start(step()).build();
 	}
 
 	@Bean

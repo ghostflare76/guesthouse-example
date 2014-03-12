@@ -1,4 +1,4 @@
-package com.cowboy76.batch;
+package com.cowboy76.batch.config;
 
 import javax.annotation.PostConstruct;
 
@@ -25,6 +25,9 @@ public class DataSourceConfiguration  {
 
 	@Value("classpath:org/springframework/batch/core/schema-mysql.sql")
 	private Resource createScript;
+	
+	@Value("classpath:schema-report.sql")
+	private Resource createTempScript;
 
 	@Autowired
 	private Environment environment;
@@ -35,6 +38,7 @@ public class DataSourceConfiguration  {
 		ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
 		populator.addScript(dropScript);
 		populator.addScript(createScript);
+		populator.addScript(createTempScript);
 		populator.setContinueOnError(true);
 		DatabasePopulatorUtils.execute(populator, dataSource());
 	}

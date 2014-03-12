@@ -1,4 +1,4 @@
-package com.cowboy76.batch;
+package com.cowboy76.batch.mapper;
 
 import java.text.SimpleDateFormat;
 
