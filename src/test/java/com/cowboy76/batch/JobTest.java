@@ -14,7 +14,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.cowboy76.batch.config.AppConfig;
-import com.cowboy76.batch.config.BatchJobConfiguration;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 /*@ContextConfiguration(classes={DataSourceConfiguration.class, BatchConfiguration.class})*/
