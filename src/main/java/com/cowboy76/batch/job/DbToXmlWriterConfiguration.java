@@ -29,40 +29,38 @@ import com.cowboy76.batch.model.Report;
 
 @Configuration
 public class DbToXmlWriterConfiguration {
-	
+
 	@Autowired
 	private StepBuilderFactory stepBuilders;
 
 	@Autowired
 	private JobBuilderFactory jobBuilders;
-	
+
 	@Autowired
 	private DataSourceConfiguration dataSourceConfiguration;
-	
-	
+
 	@Autowired
 	BatchConfiguration batchConfiguration;
 
 	@Bean
 	public ItemReader<Report> reader() {
-		
-	MySqlPagingQueryProvider provider = new MySqlPagingQueryProvider();
-	    provider.setSelectClause("SELECT ID, SALES, QTY, STAFF_NAME, DATE");
-	    provider.setFromClause("FROM REPORT");
-	    
-	    Map<String, Order> sortKeys = new LinkedHashMap<String, Order>();
+
+		MySqlPagingQueryProvider provider = new MySqlPagingQueryProvider();
+		provider.setSelectClause("SELECT ID, SALES, QTY, STAFF_NAME, DATE");
+		provider.setFromClause("FROM REPORT");
+
+		Map<String, Order> sortKeys = new LinkedHashMap<String, Order>();
 		sortKeys.put("ID", Order.ASCENDING);
-		provider.setSortKeys(sortKeys);	  
-	    
-		JdbcPagingItemReader <Report> reader = new JdbcPagingItemReader <Report>();
+		provider.setSortKeys(sortKeys);
+
+		JdbcPagingItemReader<Report> reader = new JdbcPagingItemReader<Report>();
 		reader.setDataSource(dataSourceConfiguration.dataSource());
 		reader.setRowMapper(new ReportMapper());
 		reader.setQueryProvider(provider);
-	//	reader.setSql("SELECT ID, SALES, QTY, STAFF_NAME, DATE FROM REPORT ORDER BY ID ASC");
+		//	reader.setSql("SELECT ID, SALES, QTY, STAFF_NAME, DATE FROM REPORT ORDER BY ID ASC");
 		return reader;
 	}
-	
- 
+
 	@Bean
 	public ItemProcessor<Report, Report> processor() {
 		return new CustomItemProcessor();
@@ -84,22 +82,15 @@ public class DbToXmlWriterConfiguration {
 		return marshaller;
 	}
 
-	@Bean(name="dbToXmlJob")
+	@Bean(name = "dbToXmlJob")
 	public Job dbToXmlJob() {
-		return jobBuilders.get("dbToXmlJob")
-			.listener(batchConfiguration.customJobExecutionListener())
-			.start(step())
-			.build();
+		return jobBuilders.get("dbToXmlJob").listener(batchConfiguration.customJobExecutionListener()).start(step()).build();
 	}
 
 	@Bean
 	public Step step() {
-		return stepBuilders.get("step").<Report, Report> chunk(1)
-			.reader(reader())
-			.processor(processor())
-			.writer(writer())
-			.build();
+		return stepBuilders.get("step").<Report, Report> chunk(1).reader(reader()).processor(processor()).writer(
+			writer()).build();
 	}
-
 
 }
