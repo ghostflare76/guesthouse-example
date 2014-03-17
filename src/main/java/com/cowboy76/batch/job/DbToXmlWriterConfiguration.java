@@ -84,12 +84,12 @@ public class DbToXmlWriterConfiguration {
 
 	@Bean(name = "dbToXmlJob")
 	public Job dbToXmlJob() {
-		return jobBuilders.get("dbToXmlJob").listener(batchConfiguration.customJobExecutionListener()).start(step()).build();
+		return jobBuilders.get("dbToXmlJob").listener(batchConfiguration.customJobExecutionListener()).start(dbToXmlStep()).build();
 	}
 
 	@Bean
-	public Step step() {
-		return stepBuilders.get("step").<Report, Report> chunk(1).reader(reader()).processor(processor()).writer(
+	public Step dbToXmlStep() {
+		return stepBuilders.get("dbToXmlStep").<Report, Report> chunk(1).reader(reader()).processor(processor()).writer(
 			writer()).build();
 	}
 
