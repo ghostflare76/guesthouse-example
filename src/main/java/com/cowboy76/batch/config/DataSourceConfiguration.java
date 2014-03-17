@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.Scope;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.Resource;
 import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
@@ -17,6 +16,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
+
 @PropertySource("classpath:environment/database_loc.properties")
 public class DataSourceConfiguration  {
 	
@@ -44,7 +44,6 @@ public class DataSourceConfiguration  {
 	}
 	
 	@Bean(destroyMethod = "close")
-	@Scope("prototype")
 	public DataSource dataSource() {
 		DataSource ds = new DataSource();	
 		ds.setDriverClassName(environment.getRequiredProperty("default.ds.jdbc.driverClassName"));

@@ -1,7 +1,8 @@
-package com.cowboy76.batch.config;
+package com.cowboy76.batch.job;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
+import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.item.ItemProcessor;
@@ -22,10 +23,14 @@ import org.springframework.oxm.Marshaller;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
 import com.cowboy76.batch.CustomItemProcessor;
+import com.cowboy76.batch.config.BatchConfiguration;
+import com.cowboy76.batch.config.DataSourceConfiguration;
+import com.cowboy76.batch.listener.CustomJobExecutionListener;
 import com.cowboy76.batch.mapper.ReportFileSetMapper;
 import com.cowboy76.batch.model.Report;
 
 @Configuration
+@EnableBatchProcessing
 public class CsvToXmlWriterJobConfiguration {
 	
 	@Autowired
@@ -33,7 +38,13 @@ public class CsvToXmlWriterJobConfiguration {
 
 	@Autowired
 	private JobBuilderFactory jobBuilders;
+	
+	@Autowired
+	DataSourceConfiguration dataSourceConfiguration;
 
+	@Autowired
+	BatchConfiguration batchConfiguration;
+	
 	@Bean
 	public ItemReader<Report> reader() {
 		FlatFileItemReader<Report> reader = new FlatFileItemReader<Report>();
@@ -63,7 +74,7 @@ public class CsvToXmlWriterJobConfiguration {
 	}
 
 	@Bean
-	public ItemWriter<Report> writer() {
+	public ItemWriter<Report> csvToXmlWriter() {
 		StaxEventItemWriter<Report> writer = new StaxEventItemWriter<Report>();
 		writer.setResource(new FileSystemResource("xml/outputs/csvToXmlReport.xml"));
 		writer.setRootTagName("report");
@@ -78,15 +89,23 @@ public class CsvToXmlWriterJobConfiguration {
 		return marshaller;
 	}
 
-	@Bean
+	@Bean(name="csvToXmlJob")
 	public Job csvToXmlJob() {
-		return jobBuilders.get("csvToXmlJob").start(step()).build();
+		return jobBuilders.get("csvToXmlJob")
+			.listener(batchConfiguration.customJobExecutionListener())
+			.start(csvToXmlStep())
+			.build();
 	}
 
-	@Bean
-	public Step step() {
-		return stepBuilders.get("step").<Report, Report> chunk(1).reader(reader()).processor(processor()).writer(
-			writer()).build();
+	@Bean(name="csvToXmlStep")
+	public Step csvToXmlStep() {
+		return stepBuilders.get("csvToXmlStep").<Report, Report> chunk(1)
+			.reader(reader())
+			.processor(processor())
+			.writer(csvToXmlWriter())
+			.build();
 	}
 
+
+	
 }

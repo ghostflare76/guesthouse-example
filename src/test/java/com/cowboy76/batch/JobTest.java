@@ -13,11 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.cowboy76.batch.config.BatchConfiguration;
-import com.cowboy76.batch.config.DataSourceConfiguration;
+import com.cowboy76.batch.config.AppConfig;
+import com.cowboy76.batch.config.BatchJobConfiguration;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes={DataSourceConfiguration.class, BatchConfiguration.class})
+/*@ContextConfiguration(classes={DataSourceConfiguration.class, BatchConfiguration.class})*/
+@ContextConfiguration(classes={AppConfig.class})
 public class JobTest {
 	
 	@Autowired
@@ -25,17 +26,19 @@ public class JobTest {
 
 	@Autowired
 	private JobLauncher jobLauncher;
-	
+
+
+		
 	@Test
 	public void testCsvToXmlJob() throws Exception {
-		Job job = jobRegistry.getJob("csvToXmlJob");
+		Job job = jobRegistry.getJob("csvToXmlJob");		
 		jobLauncher.run(job, new JobParameters());
 		assertThat(job.getName(),is("csvToXmlJob"));
 	}
 	
 	@Test
-	public void testDbToXmlJob() throws Exception {
-		Job job = jobRegistry.getJob("dbToXmlJob");
+	public void testDbToXmlJob() throws Exception {		
+		Job job = jobRegistry.getJob("dbToXmlJob");	
 		jobLauncher.run(job, new JobParameters());
 		assertThat(job.getName(),is("dbToXmlJob"));
 	}

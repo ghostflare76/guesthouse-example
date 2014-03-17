@@ -1,4 +1,7 @@
-package com.cowboy76.batch.config;
+package com.cowboy76.batch.job;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -7,18 +10,24 @@ import org.springframework.batch.core.configuration.annotation.StepBuilderFactor
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
-import org.springframework.batch.item.database.JdbcCursorItemReader;
+import org.springframework.batch.item.database.JdbcPagingItemReader;
+import org.springframework.batch.item.database.Order;
+import org.springframework.batch.item.database.support.MySqlPagingQueryProvider;
 import org.springframework.batch.item.xml.StaxEventItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.oxm.Marshaller;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
 import com.cowboy76.batch.CustomItemProcessor;
+import com.cowboy76.batch.config.BatchConfiguration;
+import com.cowboy76.batch.config.DataSourceConfiguration;
 import com.cowboy76.batch.mapper.ReportMapper;
 import com.cowboy76.batch.model.Report;
 
+@Configuration
 public class DbToXmlWriterConfiguration {
 	
 	@Autowired
@@ -29,23 +38,27 @@ public class DbToXmlWriterConfiguration {
 	
 	@Autowired
 	private DataSourceConfiguration dataSourceConfiguration;
+	
+	
+	@Autowired
+	BatchConfiguration batchConfiguration;
 
 	@Bean
 	public ItemReader<Report> reader() {
 		
-/*		MySqlPagingQueryProvider provider = new MySqlPagingQueryProvider();
+	MySqlPagingQueryProvider provider = new MySqlPagingQueryProvider();
 	    provider.setSelectClause("SELECT ID, SALES, QTY, STAFF_NAME, DATE");
 	    provider.setFromClause("FROM REPORT");
 	    
 	    Map<String, Order> sortKeys = new LinkedHashMap<String, Order>();
 		sortKeys.put("ID", Order.ASCENDING);
-		provider.setSortKeys(sortKeys);	  */  
+		provider.setSortKeys(sortKeys);	  
 	    
-		JdbcCursorItemReader<Report> reader = new JdbcCursorItemReader<Report>();
+		JdbcPagingItemReader <Report> reader = new JdbcPagingItemReader <Report>();
 		reader.setDataSource(dataSourceConfiguration.dataSource());
 		reader.setRowMapper(new ReportMapper());
-		//reader.setQueryProvider(provider);
-		reader.setSql("SELECT ID, SALES, QTY, STAFF_NAME, DATE FROM REPORT ORDER BY ID ASC");
+		reader.setQueryProvider(provider);
+	//	reader.setSql("SELECT ID, SALES, QTY, STAFF_NAME, DATE FROM REPORT ORDER BY ID ASC");
 		return reader;
 	}
 	
@@ -71,15 +84,22 @@ public class DbToXmlWriterConfiguration {
 		return marshaller;
 	}
 
-	@Bean
+	@Bean(name="dbToXmlJob")
 	public Job dbToXmlJob() {
-		return jobBuilders.get("dbToXmlJob").start(step()).build();
+		return jobBuilders.get("dbToXmlJob")
+			.listener(batchConfiguration.customJobExecutionListener())
+			.start(step())
+			.build();
 	}
 
 	@Bean
 	public Step step() {
-		return stepBuilders.get("step").<Report, Report> chunk(1).reader(reader()).processor(processor()).writer(
-			writer()).build();
+		return stepBuilders.get("step").<Report, Report> chunk(1)
+			.reader(reader())
+			.processor(processor())
+			.writer(writer())
+			.build();
 	}
+
 
 }
