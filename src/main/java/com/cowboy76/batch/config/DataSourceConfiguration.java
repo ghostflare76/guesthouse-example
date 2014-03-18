@@ -10,8 +10,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.Resource;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
@@ -69,6 +71,11 @@ public class DataSourceConfiguration  {
 	
 		
 		return ds;
+	}
+	
+	public PlatformTransactionManager getTransactionManager() throws Exception {
+		return new DataSourceTransactionManager(dataSource());
+		//return new WebSphereUowTransactionManager();
 	}
 
 	/*@Override

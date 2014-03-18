@@ -45,7 +45,7 @@ public class CsvToXmlWriterJobConfiguration {
 	@Autowired
 	BatchConfiguration batchConfiguration;
 	
-	@Bean
+	@Bean(name="csvReader")
 	public ItemReader<Report> reader() {
 		FlatFileItemReader<Report> reader = new FlatFileItemReader<Report>();
 		reader.setResource(new ClassPathResource("input/report.csv"));
@@ -73,8 +73,8 @@ public class CsvToXmlWriterJobConfiguration {
 		return new CustomItemProcessor();
 	}
 
-	@Bean
-	public ItemWriter<Report> csvToXmlWriter() {
+	@Bean(name="xmlWriter")
+	public ItemWriter<Report> writer() {
 		StaxEventItemWriter<Report> writer = new StaxEventItemWriter<Report>();
 		writer.setResource(new FileSystemResource("xml/outputs/csvToXmlReport.xml"));
 		writer.setRootTagName("report");
@@ -90,19 +90,19 @@ public class CsvToXmlWriterJobConfiguration {
 	}
 
 	@Bean(name="csvToXmlJob")
-	public Job csvToXmlJob() {
+	public Job job() {
 		return jobBuilders.get("csvToXmlJob")
 			.listener(batchConfiguration.customJobExecutionListener())
-			.start(csvToXmlStep())
+			.start(step())
 			.build();
 	}
 
 	@Bean(name="csvToXmlStep")
-	public Step csvToXmlStep() {
+	public Step step() {
 		return stepBuilders.get("csvToXmlStep").<Report, Report> chunk(1)
 			.reader(reader())
 			.processor(processor())
-			.writer(csvToXmlWriter())
+			.writer(writer())
 			.build();
 	}
 

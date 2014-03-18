@@ -30,7 +30,7 @@ public class ReportFileSetMapper implements FieldSetMapper<Report> {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+				
 		return report;
 
 	}

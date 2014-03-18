@@ -3,8 +3,9 @@ package com.cowboy76.batch.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @XmlRootElement(name = "record")
 public class Report {
@@ -19,7 +20,7 @@ public class Report {
 
 	private Date date;
 
-	@XmlAttribute(name = "id")
+	@XmlElement(name = "id")
 	public int getId() {
 		return id;
 	}
@@ -28,7 +29,7 @@ public class Report {
 		this.id = id;
 	}
 
-	@XmlAttribute(name = "sales")
+	@XmlElement(name = "sales")
 	public BigDecimal getSales() {
 		return sales;
 	}
@@ -37,7 +38,7 @@ public class Report {
 		this.sales = sales;
 	}
 
-	@XmlAttribute(name = "qty")
+	@XmlElement(name = "qty")
 	public int getQty() {
 		return qty;
 	}
@@ -46,7 +47,7 @@ public class Report {
 		this.qty = qty;
 	}
 
-	@XmlAttribute(name = "staffName")
+	@XmlElement(name = "staffName")
 	public String getStaffName() {
 		return staffName;
 	}
@@ -54,8 +55,8 @@ public class Report {
 	public void setStaffName(String staffName) {
 		this.staffName = staffName;
 	}
-
-	@XmlAttribute(name = "date")
+	
+	@XmlElement(name = "date")
 	public Date getDate() {
 		return date;
 	}

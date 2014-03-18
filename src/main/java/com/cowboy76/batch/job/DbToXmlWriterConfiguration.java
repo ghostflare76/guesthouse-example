@@ -42,7 +42,7 @@ public class DbToXmlWriterConfiguration {
 	@Autowired
 	BatchConfiguration batchConfiguration;
 
-	@Bean
+	@Bean(name="reportReader")
 	public ItemReader<Report> reader() {
 
 		MySqlPagingQueryProvider provider = new MySqlPagingQueryProvider();
@@ -66,7 +66,7 @@ public class DbToXmlWriterConfiguration {
 		return new CustomItemProcessor();
 	}
 
-	@Bean
+	@Bean(name="dbToXmlWriter")
 	public ItemWriter<Report> writer() {
 		StaxEventItemWriter<Report> writer = new StaxEventItemWriter<Report>();
 		writer.setResource(new FileSystemResource("xml/outputs/DbToXmlReport.xml"));
@@ -84,13 +84,19 @@ public class DbToXmlWriterConfiguration {
 
 	@Bean(name = "dbToXmlJob")
 	public Job dbToXmlJob() {
-		return jobBuilders.get("dbToXmlJob").listener(batchConfiguration.customJobExecutionListener()).start(dbToXmlStep()).build();
+		return jobBuilders.get("dbToXmlJob").
+			listener(batchConfiguration.customJobExecutionListener())
+			.start(dbToXmlStep())
+			.build();
 	}
 
 	@Bean
 	public Step dbToXmlStep() {
-		return stepBuilders.get("dbToXmlStep").<Report, Report> chunk(1).reader(reader()).processor(processor()).writer(
-			writer()).build();
+		return stepBuilders.get("dbToXmlStep").<Report, Report> chunk(10)
+			.reader(reader())
+			.processor(processor())
+			.writer(writer())
+			.build();
 	}
 
 }
