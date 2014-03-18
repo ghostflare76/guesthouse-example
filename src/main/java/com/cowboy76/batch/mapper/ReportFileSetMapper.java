@@ -10,7 +10,7 @@ import com.cowboy76.batch.model.Report;
 
 public class ReportFileSetMapper implements FieldSetMapper<Report> {
 
-	private SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+	private SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
 
 	@Override
 	public Report mapFieldSet(FieldSet fieldSet) throws BindException {

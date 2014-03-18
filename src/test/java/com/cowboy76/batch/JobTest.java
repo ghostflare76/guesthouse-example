@@ -25,8 +25,6 @@ public class JobTest {
 
 	@Autowired
 	private JobLauncher jobLauncher;
-
-
 		
 	@Test
 	public void testCsvToXmlJob() throws Exception {
@@ -40,6 +38,13 @@ public class JobTest {
 		Job job = jobRegistry.getJob("dbToXmlJob");	
 		jobLauncher.run(job, new JobParameters());
 		assertThat(job.getName(),is("dbToXmlJob"));
+	}
+	
+	@Test
+	public void testXmlToDbJob() throws Exception {
+		Job job = jobRegistry.getJob("xmlToDbJob");	
+		jobLauncher.run(job, new JobParameters());
+		assertThat(job.getName(),is("xmlToDbJob"));
 	}
 	
 

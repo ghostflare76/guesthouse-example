@@ -7,6 +7,9 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import com.cowboy76.batch.adapter.JaxbBigDecimalAdapter;
+import com.cowboy76.batch.adapter.JaxbDateAdapter;
+
 @XmlRootElement(name = "record")
 public class Report {
 
@@ -30,6 +33,7 @@ public class Report {
 	}
 
 	@XmlElement(name = "sales")
+	@XmlJavaTypeAdapter(JaxbBigDecimalAdapter.class)
 	public BigDecimal getSales() {
 		return sales;
 	}
@@ -57,6 +61,7 @@ public class Report {
 	}
 	
 	@XmlElement(name = "date")
+	@XmlJavaTypeAdapter(JaxbDateAdapter.class)
 	public Date getDate() {
 		return date;
 	}
