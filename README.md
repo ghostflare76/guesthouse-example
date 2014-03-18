@@ -16,6 +16,10 @@ Step  : “READ-WRITE”
 * A : Read Rows from DataBase , 
 * C : Make XML and write it to folder C. 
 
+Step  : “READ-WRITE”
+* A : Read Xml Files from folder
+* C : insert into DataBase
+
 
 ## General Informations
 
