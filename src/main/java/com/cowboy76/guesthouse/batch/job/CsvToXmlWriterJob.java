@@ -29,7 +29,6 @@ import com.cowboy76.guesthouse.batch.mapper.ReportFileSetMapper;
 import com.cowboy76.guesthouse.batch.model.Report;
 
 @Configuration
-@EnableBatchProcessing
 public class CsvToXmlWriterJob {
 
 	@Autowired

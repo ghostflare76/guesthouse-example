@@ -1,6 +1,7 @@
 package com.cowboy76.guesthouse.batch.config;
 
 import org.springframework.batch.core.configuration.JobRegistry;
+import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.support.JobRegistryBeanPostProcessor;
 import org.springframework.batch.core.configuration.support.MapJobRegistry;
 import org.springframework.batch.core.launch.JobLauncher;
@@ -18,6 +19,7 @@ import org.springframework.jdbc.support.lob.LobHandler;
 import com.cowboy76.guesthouse.batch.listener.CustomJobExecutionListener;
 
 @Configuration
+@EnableBatchProcessing
 public class BatchConfiguration {
 
 	@Autowired
