@@ -9,7 +9,7 @@
 	
 	<logger name="com.cowboy76" level="info" />
 	
-	<logger name="org.springframework" level="warn"/>
+	<logger name="org.springframework" level="info"/>
 	    
     <logger name="org.hibernate" level="warn"/>
     
@@ -25,9 +25,9 @@
     
     <logger name="jdbc" level="warn"/>
     
-    <logger name="jdbc.sqlonly" level="info"/>
+    <logger name="jdbc.sqlonly" level="warn"/>
     
-    <logger name="jdbc.resultsettable" level="info"/>
+    <logger name="jdbc.resultsettable" level="warn"/>
     
 	<root level="info">
         <appender-ref ref="Console" />
